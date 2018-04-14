@@ -36,7 +36,16 @@
             <div id="player-score" class="score right">0</div>
         </div>
     </div>
-    <canvas id="pongArena" width="600" height="400"></canvas>
+
+    <div class="container">
+        <canvas id="pongArena" width="600" height="400"></canvas>
+        <!-- We will be programmatically showing this -->
+        <div class="win-container" hidden>
+            <h1></h1>
+            <span></span>
+        </div>
+    </div>
+    
     <script src="pongH_base.js"></script>
     <script>pongStart("pongArena"); pongStop()</script>
 </body>

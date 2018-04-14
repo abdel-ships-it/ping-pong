@@ -23,14 +23,38 @@ var difficultyConfig = {
         ballRadius: 5,
         paddleHeight: 40
     }
-}
+};
 
 /**
- * Returns the current difficulty the game is set to
- * @return number
+ * Step 6 ⚠️
+ * Render a message with who has won
+ * @param {string} title 
+ * @param {string} message 
  */
-function getDifficulty() {
+function renderWinner(title, message) {
+    // Stopping the game
+    //
+    pongStop();
 
+    // Setting the win text
+    //
+
+    var winContainer = document.querySelector('.win-container');
+
+    winContainer.querySelector('span').innerText = message;
+
+    winContainer.querySelector('h1').innerText = title;
+
+    // Showing the win container
+    // 
+    winContainer.removeAttribute('hidden');
+
+    // Starting the game after 5 seconds, and hiding the win container
+    //
+    setTimeout(() => {
+        winContainer.setAttribute('hidden', '');
+        pongStart();
+    }, 5000);
 }
 
 function pongStart(canvasId) {
@@ -40,7 +64,6 @@ function pongStart(canvasId) {
     player = new Player();
     computer = new Computer();
     ball = new Ball();
-
  
     pongRender();
     animationId = setInterval(pongStep, 15);
@@ -176,6 +199,10 @@ Computer.prototype.incrementScore = function() {
     setTimeout(() => {
         el.classList.remove('bounce');
     }, 300);
+
+    if ( this.score === 1 ) {
+        renderWinner('game over', 'Computer has won 😣😣😣');
+    }
 }
 function Player() {
     this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, difficultyConfig.easy.paddleHeight);
@@ -209,6 +236,10 @@ Player.prototype.incrementScore = function() {
     setTimeout(() => {
         el.classList.remove('bounce');
     }, 300);
+
+    if ( this.score === 5 ) {
+        renderWinner('winner', 'You have won 🎉🎉🎉');
+    }
 }
 
 /**
