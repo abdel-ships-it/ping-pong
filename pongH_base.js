@@ -7,10 +7,32 @@ var context = null;
 var player = null;
 /** @type Computer */
 var computer = null;
+/** @type Ball */
 var ball = null;
 var keysDown = {};
 var isGoing = false;
 var animationId;
+
+/** Represents the configuration of different modes */
+var difficultyConfig = {
+    easy: {
+        ballRadius: 10,
+        paddleHeight: 70
+    },
+    hard: {
+        ballRadius: 5,
+        paddleHeight: 40
+    }
+}
+
+/**
+ * Returns the current difficulty the game is set to
+ * @return number
+ */
+function getDifficulty() {
+
+}
+
 function pongStart(canvasId) {
     pongStop();
     canvas = document.getElementById(canvasId);
@@ -156,7 +178,7 @@ Computer.prototype.incrementScore = function() {
     }, 300);
 }
 function Player() {
-    this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, 50);
+    this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, difficultyConfig.easy.paddleHeight);
     this.score = 0;
 }
 
@@ -197,11 +219,11 @@ Player.prototype.incrementScore = function() {
 Player.prototype.updatePaddle = function (difficulty) {
     console.log(typeof difficulty);
     if ( difficulty === 0 ) {
-        this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, 70);
+        this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, difficultyConfig.easy.paddleHeight);
     }
     
     if ( difficulty === 1 ) {
-        this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, 40);
+        this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, difficultyConfig.hard.paddleHeight);
     }
 }
 
@@ -210,6 +232,7 @@ function Ball() {
     this.y = null;
     this.x_speed = null;
     this.y_speed = null;
+    this.radius = difficultyConfig.easy.ballRadius;
     this.reset();
 }
 Ball.prototype.reset = function () {
@@ -220,7 +243,7 @@ Ball.prototype.reset = function () {
 };
 Ball.prototype.render = function () {
     context.beginPath();
-    context.arc(this.x, this.y, 5, 2 * Math.PI, false);
+    context.arc(this.x, this.y, this.radius, 2 * Math.PI, false);
     context.fillStyle = "white";
     context.fill();
 };
@@ -267,6 +290,21 @@ Ball.prototype.update = function (computerPaddle, playerPaddle) {
         playerPaddle.checkCollision(this);
     }
 };
+
+/**
+ * Step 5 ⚠️
+ * Updates the difficulty by modifying the radius
+ * @param {number} difficulty either 0 or 1, where 0 is easy and 1 is hard
+ */
+Ball.prototype.updateRadius = function (difficulty) {
+    if (difficulty === 0) { 
+        this.radius = difficultyConfig.easy.ballRadius;
+    }
+    if (difficulty === 1) {
+        this.radius = difficultyConfig.hard.ballRadius; 
+    }
+}
+
 window.addEventListener("keydown", function (event) {
     keysDown[event.key] = true;
 });
@@ -282,8 +320,9 @@ document.querySelectorAll('input[name=difficulty]').forEach( function( element )
     element.addEventListener('change', function(event) {
         // The difficulty will be either 0 or 1, where 0 is easy and 1 is hard
         //
-        console.log('updating difficulty to', this.value)
-        player.updatePaddle(Number(this.value));
+        var value = Number(this.value);
+        player.updatePaddle(value);
+        ball.updateRadius(value);
     });
 
     // We dont want the browser to change values when keydown is pressed
