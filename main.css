@@ -7,7 +7,7 @@ canvas {
 }
 
 div.controls {
-    padding: 16px 0px;
+    padding: 8px 0px;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
