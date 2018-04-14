@@ -5,3 +5,35 @@ body {
 canvas {
     border: 3px solid blue;
 }
+
+div.controls {
+    padding: 16px 0px;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    max-width: 600px;
+}
+
+.score {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #37474f;
+    color: white;
+    text-align: center;
+    line-height: 35px;
+}
+
+.score-container {
+    all: inherit;
+}
+
+.score-container span {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.right {
+    margin-left: auto;
+}

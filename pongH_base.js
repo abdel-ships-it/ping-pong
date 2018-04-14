@@ -3,7 +3,9 @@
 var canvas = null;
 /** @type CanvasRenderingContext2D */
 var context = null;
+/** @type Player */
 var player = null;
+/** @type Computer */
 var computer = null;
 var ball = null;
 var keysDown = {};
@@ -25,7 +27,7 @@ function pongStart(canvasId) {
 function pongStop() {
     if (isGoing) {
         clearInterval(animationId);
-        going = false;
+        isGoing = false;
     }
 }
 function pongStep() {
@@ -89,7 +91,7 @@ Paddle.prototype.move = function (deltaX, deltaY) {
         this.y = 0;
         this.y_speed = 0;
     } else if (this.y + this.height > canvas.height) {
-        this.y = canvas.height- this.height;
+        this.y = canvas.height - this.height;
         this.y_speed = 0;
 
     }
@@ -120,6 +122,7 @@ Paddle.prototype.checkCollision = function (ball) {
 };
 function Computer() {
     this.paddle = new Paddle(10, canvas.height / 2 - 25, 10, 50);
+    this.score = 0;
 }
 Computer.prototype.render = function () {
     this.paddle.render();
@@ -137,8 +140,15 @@ Computer.prototype.update = function (ball) {
     }
     this.paddle.move(0, 2 * diff / 3);
 };
+// Step 3 ️⚠️
+//
+Computer.prototype.incrementScore = function() {
+    this.score++;
+    document.getElementById("computer-score").innerText = this.score.toString();
+}
 function Player() {
     this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, 50);
+    this.score = 0;
 }
 
 Player.prototype.render = function () {
@@ -146,16 +156,22 @@ Player.prototype.render = function () {
 };
 Player.prototype.update = function () {
     this.paddle.move(0, 0);
-    for (var key in keysDown) {
-        var value = Number(key);
-        if (value === 38) {
+    for (var value in keysDown) {
+        if (value === "ArrowUp") {
             this.paddle.move(0, -4);
-        } else if (value === 40) {
+        } else if (value === "ArrowDown") {
             this.paddle.move(0, 4);
         }
 
     }
 };
+// Step 3 ️⚠️
+//
+Player.prototype.incrementScore = function() {
+    this.score++;
+    document.getElementById("player-score").innerText = this.score.toString();
+}
+
 function Ball() {
     this.x = null;
     this.y = null;
@@ -178,10 +194,28 @@ Ball.prototype.render = function () {
 Ball.prototype.update = function (computerPaddle, playerPaddle) {
     this.x += this.x_speed;
     this.y += this.y_speed;
+    // Step 3 ️⚠️
+    //
     if (this.x < 0 || this.x > canvas.width) {
+        // Means the ball exitted the canvas through the left side
+        // Player scored !
+        //
+        if (this.x < 0) {
+            player.incrementScore();
+        }
+
+        // Means the ball exitted the canvas through the right side
+        // Computer scored!
+        //
+        if (this.x > canvas.width) {
+            computer.incrementScore();
+        }
+
         this.reset();
         return;
     }
+    
+
     if (this.y - 5 < 0) {
         this.y = 5;
         if (this.y_speed < 0) {
@@ -201,8 +235,9 @@ Ball.prototype.update = function (computerPaddle, playerPaddle) {
     }
 };
 window.addEventListener("keydown", function (event) {
-    keysDown[event.keyCode] = true;
+    keysDown[event.key] = true;
 });
 window.addEventListener("keyup", function (event) {
-    delete keysDown[event.keyCode];
+    console.log(event.key);
+    delete keysDown[event.key];
 });

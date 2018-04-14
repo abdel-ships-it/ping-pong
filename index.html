@@ -12,10 +12,19 @@
     <a href="https://robots.thoughtbot.com/pong-clone-in-javascript" target="_blank">
         https://robots.thoughtbot.com/pong-clone-in-javascript</a> van Matt Mongeau.
 
-    <p>
+    <div class="controls">
+        <div class="score-container">
+            <div id="computer-score" class="score">0</div>
+            <span>Computer</span>
+        </div>
+        
         <button onclick='pongStart("pongArena")'>Start Pong</button>
         <button onclick='pongStop()'>Stop Pong</button>
-    </p>
+        <div class="right score-container">
+            <span>Player</span>
+            <div id="player-score" class="score right">0</div>
+        </div>
+    </div>
     <canvas id="pongArena" width="600" height="400"></canvas>
     <script src="pongH_base.js"></script>
     <script>pongStart("pongArena"); pongStop()</script>
