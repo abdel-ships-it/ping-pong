@@ -144,7 +144,15 @@ Computer.prototype.update = function (ball) {
 //
 Computer.prototype.incrementScore = function() {
     this.score++;
-    document.getElementById("computer-score").innerText = this.score.toString();
+    var el = document.getElementById("computer-score");
+
+    el.innerText = this.score.toString();
+
+    el.classList.add('bounce');
+
+    setTimeout(() => {
+        el.classList.remove('bounce');
+    }, 300);
 }
 function Player() {
     this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, 50);
@@ -169,7 +177,15 @@ Player.prototype.update = function () {
 //
 Player.prototype.incrementScore = function() {
     this.score++;
-    document.getElementById("player-score").innerText = this.score.toString();
+    var el = document.getElementById("player-score");
+
+    el.innerText = this.score.toString();
+
+    el.classList.add('bounce');
+
+    setTimeout(() => {
+        el.classList.remove('bounce');
+    }, 300);
 }
 
 function Ball() {

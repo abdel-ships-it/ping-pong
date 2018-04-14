@@ -16,10 +16,21 @@
         <div class="score-container">
             <div id="computer-score" class="score">0</div>
             <span>Computer</span>
+        </div>        
+
+        <div class="buttons-container">
+            <button onclick='pongStart("pongArena")'>Start Pong</button>
+            <button onclick='pongStop()'>Stop Pong</button>
         </div>
-        
-        <button onclick='pongStart("pongArena")'>Start Pong</button>
-        <button onclick='pongStop()'>Stop Pong</button>
+        <label>
+            <input type="radio" name="difficulty" value="0">
+            Easy
+        </label>
+        <label>
+            <input type="radio" name="difficulty" value="1">
+            Hard
+        </label>
+
         <div class="right score-container">
             <span>Player</span>
             <div id="player-score" class="score right">0</div>

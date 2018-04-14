@@ -23,10 +23,32 @@ div.controls {
     color: white;
     text-align: center;
     line-height: 35px;
+    transition: transform 300ms;
 }
 
-.score-container {
+.score.bounce {
+    transform: scale(1.1);
+}
+
+.score-container, .buttons-container {
     all: inherit;
+}
+
+.buttons-container {
+    margin:0 auto;
+}
+
+button + button {
+    margin-left: 8px;
+}
+
+label {
+    margin-left: auto;
+    display: block;
+}
+
+label + label {
+    margin-left: 8px;
 }
 
 .score-container span {
