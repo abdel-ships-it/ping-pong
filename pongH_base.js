@@ -120,6 +120,7 @@ Paddle.prototype.checkCollision = function (ball) {
         ball.y_speed = -6;
     }
 };
+
 function Computer() {
     this.paddle = new Paddle(10, canvas.height / 2 - 25, 10, 50);
     this.score = 0;
@@ -186,6 +187,22 @@ Player.prototype.incrementScore = function() {
     setTimeout(() => {
         el.classList.remove('bounce');
     }, 300);
+}
+
+/**
+ * Step 4 ⚠️
+ * Updates the difficulty on the player by modifying the paddle size
+ * @param {number} difficulty either 0 or 1, where 0 is easy and 1 is hard
+ */
+Player.prototype.updatePaddle = function (difficulty) {
+    console.log(typeof difficulty);
+    if ( difficulty === 0 ) {
+        this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, 70);
+    }
+    
+    if ( difficulty === 1 ) {
+        this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, 40);
+    }
 }
 
 function Ball() {
@@ -256,4 +273,22 @@ window.addEventListener("keydown", function (event) {
 window.addEventListener("keyup", function (event) {
     console.log(event.key);
     delete keysDown[event.key];
+});
+
+// Step 4 ⚠️
+// Listening to the input value changes 
+//
+document.querySelectorAll('input[name=difficulty]').forEach( function( element ) {
+    element.addEventListener('change', function(event) {
+        // The difficulty will be either 0 or 1, where 0 is easy and 1 is hard
+        //
+        console.log('updating difficulty to', this.value)
+        player.updatePaddle(Number(this.value));
+    });
+
+    // We dont want the browser to change values when keydown is pressed
+    //
+    element.addEventListener('keydown', function(event) {
+        event.preventDefault();
+    });
 });
