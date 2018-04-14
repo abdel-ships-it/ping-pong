@@ -200,7 +200,7 @@ Computer.prototype.incrementScore = function() {
         el.classList.remove('bounce');
     }, 300);
 
-    if ( this.score === 1 ) {
+    if ( this.score === 5 ) {
         renderWinner('game over', 'Computer has won 😣😣😣');
     }
 }
@@ -248,7 +248,6 @@ Player.prototype.incrementScore = function() {
  * @param {number} difficulty either 0 or 1, where 0 is easy and 1 is hard
  */
 Player.prototype.updatePaddle = function (difficulty) {
-    console.log(typeof difficulty);
     if ( difficulty === 0 ) {
         this.paddle = new Paddle(canvas.width - 20, canvas.height / 2 - 25, 10, difficultyConfig.easy.paddleHeight);
     }
@@ -274,7 +273,7 @@ Ball.prototype.reset = function () {
 };
 Ball.prototype.render = function () {
     context.beginPath();
-    context.arc(this.x, this.y, this.radius, 2 * Math.PI, false);
+    context.arc(this.x, this.y, this.radius, 2 * Math.PI, 0);
     context.fillStyle = "white";
     context.fill();
 };
