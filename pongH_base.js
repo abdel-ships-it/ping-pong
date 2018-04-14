@@ -45,6 +45,20 @@ function renderWinner(title, message) {
 
     winContainer.querySelector('h1').innerText = title;
 
+    // Showing the user feedback on when the game will start
+    //
+    var secondsToRestart = 5;
+
+    var restartFeedbackEl = winContainer.querySelector('.restarting-in');
+
+    restartFeedbackEl.innerText = `Restarting in ${secondsToRestart}`;
+
+    var restartInterval = setInterval(() => {
+        secondsToRestart -= 1;
+        restartFeedbackEl.innerText = `Restarting in ${secondsToRestart}`;
+    }, 1000);
+
+
     // Showing the win container
     // 
     winContainer.removeAttribute('hidden');
@@ -54,12 +68,15 @@ function renderWinner(title, message) {
     setTimeout(() => {
         winContainer.setAttribute('hidden', '');
         pongStart();
-    }, 5000);
+        clearInterval(restartInterval);
+
+        restartFeedbackEl.innerText = '';
+    }, secondsToRestart * 1000);
 }
 
-function pongStart(canvasId) {
+function pongStart() {
     pongStop();
-    canvas = document.getElementById(canvasId);
+    canvas = document.querySelector('canvas');
     context = canvas.getContext('2d');
     player = new Player();
     computer = new Computer();
@@ -138,7 +155,6 @@ Paddle.prototype.move = function (deltaX, deltaY) {
     } else if (this.y + this.height > canvas.height) {
         this.y = canvas.height - this.height;
         this.y_speed = 0;
-
     }
 };
 Paddle.prototype.checkCollision = function (ball) {
@@ -200,7 +216,7 @@ Computer.prototype.incrementScore = function() {
         el.classList.remove('bounce');
     }, 300);
 
-    if ( this.score === 5 ) {
+    if ( this.score === 1 ) {
         renderWinner('game over', 'Computer has won 😣😣😣');
     }
 }
