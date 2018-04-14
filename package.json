@@ -1,0 +1,23 @@
+{
+  "name": "ping-pong",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pongH_base.js",
+  "scripts": {
+    "serve": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realappie/ping-pong.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/realappie/ping-pong/issues"
+  },
+  "homepage": "https://github.com/realappie/ping-pong#readme",
+  "devDependencies": {
+    "lite-server": "^2.3.0"
+  }
+}
