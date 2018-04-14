@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The game of PONG</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <h2>The Game of PONG</h2>
+    Gevonden bij
+    <a href="https://robots.thoughtbot.com/pong-clone-in-javascript" target="_blank">
+        https://robots.thoughtbot.com/pong-clone-in-javascript</a> van Matt Mongeau.
+
+    <p>
+        <button onclick='pongStart("pongArena")'>Start Pong</button>
+        <button onclick='pongStop()'>Stop Pong</button>
+    </p>
+    <canvas id="pongArena" width="600" height="400" style="border:1px solid #000000;"></canvas>
+    <script src="pongH_base.js"></script>
+    <script>pongStart("pongArena"); pongStop()</script>
+</body>
+
+</html>
