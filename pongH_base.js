@@ -172,7 +172,7 @@ Ball.prototype.reset = function () {
 Ball.prototype.render = function () {
     context.beginPath();
     context.arc(this.x, this.y, 5, 2 * Math.PI, false);
-    context.fillStyle = "#000000";
+    context.fillStyle = "white";
     context.fill();
 };
 Ball.prototype.update = function (computerPaddle, playerPaddle) {
