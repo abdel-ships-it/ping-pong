@@ -4,8 +4,8 @@
     <title>The game of PONG</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
 </head>
-
 <body>
     <h2>The Game of PONG</h2>
     Gevonden bij
@@ -16,7 +16,7 @@
         <button onclick='pongStart("pongArena")'>Start Pong</button>
         <button onclick='pongStop()'>Stop Pong</button>
     </p>
-    <canvas id="pongArena" width="600" height="400" style="border:1px solid #000000;"></canvas>
+    <canvas id="pongArena" width="600" height="400"></canvas>
     <script src="pongH_base.js"></script>
     <script>pongStart("pongArena"); pongStop()</script>
 </body>

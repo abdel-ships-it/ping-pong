@@ -1,9 +1,7 @@
 //@ts-check
-/*******
-* Game of pong
-* modified from https://robots.thoughtbot.com/pong-clone-in-javascript
-*/
+/** @type HTMLCanvasElement */
 var canvas = null;
+/** @type CanvasRenderingContext2D */
 var context = null;
 var player = null;
 var computer = null;
@@ -18,6 +16,8 @@ function pongStart(canvasId) {
     player = new Player();
     computer = new Computer();
     ball = new Ball();
+
+ 
     pongRender();
     animationId = setInterval(pongStep, 15);
     isGoing = true;
@@ -33,11 +33,37 @@ function pongStep() {
     pongRender();
 }
 function pongRender() {
-    context.fillStyle = "#FF00FF";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    player.render();
-    computer.render();
-    ball.render();
+    // Step 2 ⚠️
+    // We will pass the canvas dimensions to the image constructor to ensure the image is resized properly
+    // 
+    var image = new Image(canvas.width, canvas.height);
+
+    image.src = './background.jpg';
+
+    // We want to draw when the image has loaded, we are creating a function here that will be called once the image has loaded
+    //
+    image.onload = () => {
+        // We are ready to draw now
+        //
+        console.log('image has loaded, drawing...');
+        // Setting the filter and blurring the image just slightly
+        //
+        context.filter = 'blur(4px)';
+        // Drawing the image at x = 0 and y = 0
+        //
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        // Getting rid of the filter
+        // 
+        context.filter = 'none';
+
+        // We will render the rest of the things we need to render
+        // Its very important this happens in this function as this function will not immediately execute ( because its an asynchronous event )
+        // So placing these outside of this function, would render the game elements. And then it would get overrwiten by our image render which is executed later.
+        //
+        player.render();
+        computer.render();
+        ball.render();
+    }
 }
 function pongUpdate() {
     player.update();
@@ -131,6 +157,10 @@ Player.prototype.update = function () {
     }
 };
 function Ball() {
+    this.x = null;
+    this.y = null;
+    this.x_speed = null;
+    this.y_speed = null;
     this.reset();
 }
 Ball.prototype.reset = function () {
