@@ -226,7 +226,7 @@ Computer.prototype.incrementScore = function() {
         el.classList.remove('bounce');
     }, 300);
 
-    if ( this.score === 1 ) {
+    if ( this.score === 5 ) {
         renderWinner('game over', 'Computer has won 😣😣😣');
     }
 }
