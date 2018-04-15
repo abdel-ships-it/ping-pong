@@ -371,8 +371,11 @@ window.addEventListener("keydown", function (event) {
     keysDown[event.key] = true;
 });
 window.addEventListener("keyup", function (event) {
-    console.log(event.key);
+    if ( event.key.toUpperCase() === 'S' ) {
+        pongStart();
+    }
     delete keysDown[event.key];
+    
 });
 
 // Step 4 ⚠️
