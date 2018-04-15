@@ -146,6 +146,16 @@ Paddle.prototype.render = function () {
     context.fillRect(this.x, this.y, this.width, this.height);
 };
 Paddle.prototype.move = function (deltaX, deltaY) {
+
+    // Step 7 ⚠️
+    //
+    var centerCrossingCondition = this.x > ((canvas.width - (10 + this.width)) - deltaX)
+    var rightSideCrossingCondition = this.x < canvas.width - (canvas.width / 2 - this.width) - deltaX;
+
+    if ( centerCrossingCondition || rightSideCrossingCondition ) {
+        return;
+    }
+
     this.x += deltaX;
     this.y += deltaY;
     this.y_speed = deltaY;
@@ -155,7 +165,7 @@ Paddle.prototype.move = function (deltaX, deltaY) {
     } else if (this.y + this.height > canvas.height) {
         this.y = canvas.height - this.height;
         this.y_speed = 0;
-    }
+    }     
 };
 Paddle.prototype.checkCollision = function (ball) {
     if (ball.x + 5 < this.x ||
@@ -233,10 +243,16 @@ Player.prototype.update = function () {
     for (var value in keysDown) {
         if (value === "ArrowUp") {
             this.paddle.move(0, -4);
-        } else if (value === "ArrowDown") {
+        } 
+        if (value === "ArrowDown") {
             this.paddle.move(0, 4);
         }
-
+        if (value === "ArrowRight") {
+            this.paddle.move(4, 0);
+        }
+        if (value === "ArrowLeft") {
+            this.paddle.move(-4, 0);
+        }
     }
 };
 // Step 3 ️⚠️
